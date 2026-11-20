@@ -1,1 +1,905 @@
-cauuuuu
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hunger Games: Aréna smrti | Svět Panemu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cinzel pro dramatické nadpisy a Inter pro čitelný text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        obsidian: '#0d0d0f',
+                        charcoal: '#16161a',
+                        ash: '#232329',
+                        ember: '#ea580c',
+                        gold: '#f59e0b',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Vlastní styly pro posuvník a jemné záře */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232329;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+        .ember-glow {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+        }
+        .ember-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(234, 88, 12, 0.35);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-obsidian text-slate-200 font-sans antialiased selection:bg-amber-500 selection:text-obsidian overflow-x-hidden">
+
+    <!-- Navigace -->
+    <header class="sticky top-0 z-50 bg-obsidian/85 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo / Reprodrozd -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-600/20 border border-amber-500/40 flex items-center justify-center group-hover:border-amber-400 transition-colors">
+                        <!-- Stylizovaný SVG symbol Reprodrozda a plamene -->
+                        <svg class="w-6 h-6 text-amber-500 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="9.5" stroke-dasharray="2 1" />
+                            <path d="M8 14c1.5-2 4.5-3.5 8-3-1.5 1.5-2.5 3-2.5 5-1.5-1-3.5-1-5.5-2z" fill="currentColor" fill-opacity="0.3"/>
+                            <path d="M12 5l1.5 4.5L18 8l-3.5 3.5L16 16l-4-2.5L8 16l1.5-4.5L6 8l4.5 1.5L12 5z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="font-display font-bold text-lg md:text-xl tracking-wider text-white">PANEM<span class="text-amber-500">.CZ</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                    <a href="#svet-panemu" class="hover:text-amber-400 transition-colors py-2">O světě Panemu</a>
+                    <a href="#postavy" class="hover:text-amber-400 transition-colors py-2">Postavy</a>
+                    <a href="#kraje" class="hover:text-amber-400 transition-colors py-2">12 krajů</a>
+                    <a href="#kviz" class="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 text-obsidian font-semibold hover:from-amber-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-600/20">
+                        Kvíz: Přežil bys v Aréně?
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Tlačítko -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-300 hover:text-amber-400 hover:bg-charcoal focus:outline-none" aria-label="Otevřít menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-charcoal border-b border-white/10 px-4 pt-2 pb-4 space-y-2">
+            <a href="#svet-panemu" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-ash hover:text-amber-400">O světě Panemu</a>
+            <a href="#postavy" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-ash hover:text-amber-400">Postavy</a>
+            <a href="#kraje" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-ash hover:text-amber-400">12 krajů</a>
+            <a href="#kviz" class="block px-3 py-2.5 rounded-lg text-base font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Kvíz: Přežil bys v Aréně?</a>
+        </div>
+    </header>
+
+    <!-- Hero Sekce s animovanými jiskrami -->
+    <section class="relative min-h-[88vh] flex items-center justify-center overflow-hidden border-b border-white/10">
+        <!-- Canvas pro jiskry -->
+        <canvas id="ember-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+        
+        <!-- Radiální stínění pozadí -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,88,12,0.12)_0%,rgba(13,13,15,0.92)_70%)] pointer-events-none z-0"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
+            <!-- Reprodrozd emblém -->
+            <div class="mx-auto w-24 h-24 sm:w-28 sm:h-28 mb-8 rounded-full bg-charcoal/80 border-2 border-amber-500/50 flex items-center justify-center ember-glow animate-float">
+                <svg class="w-14 h-14 sm:w-16 sm:h-16 text-amber-500" viewBox="0 0 64 64" fill="none">
+                    <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2.5"/>
+                    <circle cx="32" cy="32" r="24" stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 3"/>
+                    <!-- Stylizovaný pták v letu -->
+                    <path d="M18 38C23 31 31 26 45 24C40 29 37 33 37 39C32 36 25 36 18 38Z" fill="url(#goldGrad)"/>
+                    <path d="M27 29C23 22 18 18 13 17C16 23 19 27 23 31" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M35 26C36 19 39 14 44 11C43 17 41 21 38 25" stroke="#ea580c" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Šíp v zobáku -->
+                    <line x1="15" y1="43" x2="49" y2="21" stroke="#fde68a" stroke-width="1.8" stroke-linecap="round"/>
+                    <polygon points="49,21 43,21 47,26" fill="#fde68a"/>
+                    <defs>
+                        <linearGradient id="goldGrad" x1="18" y1="24" x2="45" y2="39" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#fde68a"/>
+                            <stop offset="0.5" stop-color="#f59e0b"/>
+                            <stop offset="1" stop-color="#ea580c"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <p class="text-amber-500 font-semibold tracking-[0.25em] uppercase text-xs sm:text-sm mb-4">
+                Dystopický svět Suzanne Collinsové
+            </p>
+            
+            <h1 class="font-display font-black text-4xl sm:text-6xl md:text-7xl tracking-tight text-white mb-6 leading-tight">
+                HUNGER GAMES:<br>
+                <span class="text-gradient-gold">ARÉNA SMRTI</span>
+            </h1>
+
+            <blockquote class="max-w-2xl mx-auto mb-8">
+                <p class="text-xl sm:text-2xl font-display italic text-slate-300">
+                    „Kéž vás stále provází štěstěna.“
+                </p>
+            </blockquote>
+
+            <p class="max-w-2xl mx-auto text-slate-400 text-base sm:text-lg mb-10 leading-relaxed">
+                V troskách bývalé Severní Ameriky povstal národ Panem. Bohatý Kapitol udržuje své poddané v poslušnosti krutou každoroční podívanou – bojem na život a na smrt v přímém přenosu, kde může zvítězit jen jediný.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#kviz" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-obsidian font-bold text-base tracking-wide hover:from-amber-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-600/30 transform hover:-translate-y-0.5">
+                    Vstoupit do Sklizně (Kvíz)
+                </a>
+                <a href="#svet-panemu" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-charcoal border border-white/15 text-slate-200 font-semibold text-base hover:border-amber-500/50 hover:text-amber-400 transition-all">
+                    Prozkoumat Panem
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekce: O světě Panemu & Příběh (Interaktivní záložky) -->
+    <section id="svet-panemu" class="py-20 sm:py-28 bg-obsidian border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-500 font-semibold tracking-widest uppercase text-xs">Historie a kronika</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">O světě Panemu</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Po neúspěšném povstání známém jako <strong class="text-slate-200">Temné dny</strong> zavedl Kapitol Hladové hry jako každoroční připomínku své absolutní moci a bezmocnosti krajů.
+                </p>
+            </div>
+
+            <!-- Informační karty: Temné dny & Pravidla her -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                <div class="bg-charcoal p-7 rounded-2xl border border-white/10 ember-glow-hover transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 mb-5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Tyranský Kapitol</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Technologicky vyspělé hlavní město ukryté ve Skalistých horách. Jeho obyvatelé žijí v dekadentním luxusu na úkor dvanácti chudých krajů, které jim dodávají suroviny a potraviny.
+                    </p>
+                </div>
+
+                <div class="bg-charcoal p-7 rounded-2xl border border-white/10 ember-glow-hover transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-orange-600/10 border border-orange-500/30 flex items-center justify-center text-orange-500 mb-5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Temné dny & 13. kraj</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Před více než 75 lety se kraje vzbouřily. Kapitol povstání krvavě potlačil a údajně srovnal se zemí 13. kraj – jadernou velmoc – jako varování pro všechny budoucí generace.
+                    </p>
+                </div>
+
+                <div class="bg-charcoal p-7 rounded-2xl border border-white/10 ember-glow-hover transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 mb-5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Den Sklizně a Aréna</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Každý kraj musí každoročně vylosovat jednoho chlapce a jednu dívku ve věku 12 až 18 let. Těchto 24 splátců je vhozeno do umělé arény, dokud nezůstane naživu jen vítěz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interaktivní záložky knih / filmů -->
+            <div class="bg-charcoal rounded-2xl border border-white/10 p-6 sm:p-10 ember-glow">
+                <h3 class="font-display text-2xl font-bold text-white mb-6 text-center sm:text-left">Kronika ságy (Knihy a filmy)</h3>
+                
+                <!-- Tlačítka záložek -->
+                <div class="flex flex-wrap gap-2 sm:gap-3 mb-8 border-b border-white/10 pb-4" role="tablist">
+                    <button onclick="selectBookTab(0)" id="book-tab-0" class="book-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-obsidian">
+                        1. Aréna smrti
+                    </button>
+                    <button onclick="selectBookTab(1)" id="book-tab-1" class="book-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ash text-slate-300 hover:text-white">
+                        2. Vražedná pomsta
+                    </button>
+                    <button onclick="selectBookTab(2)" id="book-tab-2" class="book-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ash text-slate-300 hover:text-white">
+                        3. Síla vzdoru
+                    </button>
+                    <button onclick="selectBookTab(3)" id="book-tab-3" class="book-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ash text-slate-300 hover:text-white">
+                        Prequel: Balada o ptácích a hadech
+                    </button>
+                </div>
+
+                <!-- Obsah aktivní záložky -->
+                <div id="book-content" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <!-- Dynamicky naplněno JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekce: Hlavní postavy -->
+    <section id="postavy" class="py-20 sm:py-28 bg-charcoal/50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-500 font-semibold tracking-widest uppercase text-xs">Splátci, mentoři i vládci</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Hlavní postavy</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Osudy těch, kteří zapálili jiskru revoluce, i těch, kteří se ji snažili za každou cenu uhasit. Kliknutím na kartu zobrazíš podrobnosti.
+                </p>
+            </div>
+
+            <div id="characters-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Karty postav vygeneruje JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal pro detail postavy -->
+    <div id="character-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm" role="dialog" aria-modal="true">
+        <div class="bg-charcoal border border-amber-500/40 rounded-2xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl ember-glow animate-[fadeIn_0.2s_ease-out]">
+            <button onclick="closeCharacterModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:text-white hover:bg-ash transition-colors" aria-label="Zavřít">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="modal-body">
+                <!-- Obsah modalu doplní JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Sekce: Interaktivní přehled 12 krajů (+ tajný 13. kraj) -->
+    <section id="kraje" class="py-20 sm:py-28 bg-obsidian border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-500 font-semibold tracking-widest uppercase text-xs">Geografie útlaku</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Kraje Panemu</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Každý z dvanácti krajů má své specifické průmyslové zaměření, životní úroveň i tradici splátců. Vyber kraj a zjisti o něm více.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Levá strana: Mřížka tlačítek krajů -->
+                <div class="lg:col-span-5">
+                    <div id="districts-grid" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 gap-3">
+                        <!-- Vygeneruje JS -->
+                    </div>
+                    
+                    <!-- Tajné tlačítko pro 13. kraj -->
+                    <div class="mt-4">
+                        <button id="secret-district-btn" onclick="unlockDistrict13()" class="w-full py-3 px-4 rounded-xl border border-dashed border-slate-700 text-slate-500 hover:text-amber-400 hover:border-amber-500/50 text-xs font-mono tracking-wider uppercase transition-all flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <span id="secret-btn-text">[ŠIFROVANÝ SIGNÁL: KRAJ 13]</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pravá strana: Detail vybraného kraje -->
+                <div class="lg:col-span-7 bg-charcoal rounded-2xl border border-white/10 p-6 sm:p-8 ember-glow min-h-[340px] flex flex-col justify-between" id="district-detail-panel">
+                    <!-- Vygeneruje JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekce: Interaktivní kvíz přežití -->
+    <section id="kviz" class="py-20 sm:py-28 bg-gradient-to-b from-charcoal/60 to-obsidian">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-amber-500 font-semibold tracking-widest uppercase text-xs">Zkouška ohněm</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Jaký je tvůj kraj a přežil bys v Aréně?</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Odpověz na 4 strategické otázky. Tvůrci her vyhodnotí tvůj původ, ideální zbraň a procentuální šanci na přežití.
+                </p>
+            </div>
+
+            <!-- Kontejner kvízu -->
+            <div class="bg-charcoal border border-amber-500/30 rounded-2xl p-6 sm:p-10 ember-glow shadow-2xl">
+                <!-- Ukazatel postupu -->
+                <div id="quiz-progress-container" class="mb-8">
+                    <div class="flex justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                        <span id="quiz-step-label">Otázka 1 z 4</span>
+                        <span id="quiz-percent-label">25 %</span>
+                    </div>
+                    <div class="w-full h-2 bg-obsidian rounded-full overflow-hidden">
+                        <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-orange-600 transition-all duration-300" style="width: 25%"></div>
+                    </div>
+                </div>
+
+                <!-- Oblast otázky -->
+                <div id="quiz-question-area">
+                    <!-- Vygeneruje JS -->
+                </div>
+
+                <!-- Oblast výsledku (skrytá dokud není hotovo) -->
+                <div id="quiz-result-area" class="hidden text-center">
+                    <!-- Vygeneruje JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patička -->
+    <footer class="bg-obsidian border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                </div>
+                <span class="font-display font-bold text-white tracking-wider">PANEM<span class="text-amber-500">.CZ</span></span>
+            </div>
+            
+            <p class="text-slate-500 text-sm text-center">
+                Vytvořeno na počest knižní a filmové série <span class="text-slate-300">The Hunger Games</span> od autorky <span class="text-slate-300">Suzanne Collinsové</span>.
+            </p>
+
+            <p class="text-amber-500/80 font-display italic text-sm">
+                „Oheň se šíří!“
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pro interaktivitu, animace a data -->
+    <script>
+        // ==========================================
+        // 1. ANIMACE JISEK NA POZADÍ HERO SEKCE
+        // ==========================================
+        (function initEmbers() {
+            const canvas = document.getElementById('ember-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = canvas.width = canvas.offsetWidth;
+                height = canvas.height = canvas.offsetHeight;
+            }
+
+            class Ember {
+                constructor() {
+                    this.reset(true);
+                }
+                reset(initial = false) {
+                    this.x = Math.random() * width;
+                    this.y = initial ? Math.random() * height : height + 10;
+                    this.size = Math.random() * 2.8 + 0.8;
+                    this.speedY = Math.random() * 1.2 + 0.4;
+                    this.speedX = (Math.random() - 0.5) * 0.8;
+                    this.opacity = Math.random() * 0.7 + 0.2;
+                    this.fade = Math.random() * 0.003 + 0.001;
+                    // Barva mezi zlatou a ohnivě oranžovou
+                    this.color = Math.random() > 0.4 ? '245, 158, 11' : '234, 88, 12';
+                }
+                update() {
+                    this.y -= this.speedY;
+                    this.x += this.speedX + Math.sin(this.y * 0.02) * 0.3;
+                    this.opacity -= this.fade;
+                    if (this.y < -10 || this.opacity <= 0) {
+                        this.reset(false);
+                    }
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = `rgba(${this.color}, 0.8)`;
+                    ctx.fill();
+                }
+            }
+
+            function init() {
+                resize();
+                const count = Math.min(Math.floor(width / 15), 75);
+                particles = Array.from({ length: count }, () => new Ember());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                for (let p of particles) {
+                    p.update();
+                    p.draw();
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            window.addEventListener('load', () => {
+                init();
+                animate();
+            });
+        })();
+
+        // ==========================================
+        // 2. MOBILNÍ MENU
+        // ==========================================
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        // Zavřít menu po kliknutí na odkaz
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // ==========================================
+        // 3. KRONIKA SÁGY (ZÁLOŽKY KNIH)
+        // ==========================================
+        const booksData = [
+            {
+                title: "Aréna smrti (74. Hladové hry)",
+                year: "Kniha: 2008 | Film: 2012",
+                tagline: "Dobrovolně za svou sestru. Nechtěným symbolem naděje.",
+                summary: "Šestnáctiletá Katniss Everdeenová z chudého 12. kraje se dobrovolně přihlásí do Hladových her místo své mladší sestry Prim. Spolu s pekařovým synem Peetou Mellarkem musí čelit nejen profesionálním splátcům, ale i zrádné aréně ovládané Tvůrci her. Jejich vzdorovitý čin s jedovatými bobulemi zažehne jiskru odporu v celém Panemu.",
+                arena: "Mírný lesní porost s jezerem, obřími sršni (sršáňi) a geneticky upravenými muty."
+            },
+            {
+                title: "Vražedná pomsta (75. Hladové hry – Čtvrtohry)",
+                year: "Kniha: 2009 | Film: 2013",
+                tagline: "Pamatuj si, kdo je skutečný nepřítel.",
+                summary: "Vítězství Katniss a Peety neuklidnilo davy – naopak vyvolalo nepokoje v krajích. Prezident Snow proto vyhlásí speciální pravidlo pro 75. výroční hry: splátci budou vylosováni z dosavadních žijících vítězů. Katniss se vrací do Arény, aniž by tušila, že uvnitř i vně probíhá tajné spiknutí na její záchranu.",
+                arena: "Tropická džungle navržená jako obří hodiny, kde každou hodinu udeří jiná smrtící katastrofa."
+            },
+            {
+                title: "Síla vzdoru (Druhé povstání)",
+                year: "Kniha: 2010 | Filmy: 2014 a 2015",
+                tagline: "Jestli shoříme my, uhoříte s námi!",
+                summary: "12. kraj byl srovnán se zemí a Katniss se probouzí v podzemním bunkru bájného 13. kraje. Stává se tváří revoluce – Reprodrozdem. Zatímco rebelové dobývají jednotlivé kraje a míří na Kapitol, Katniss zjišťuje, že prezidentka Coinová možná touží po stejné absolutní moci jako sám Snow.",
+                arena: "Celý Panem a ulice Kapitolu prošpikované smrtícími pastmi zvanými 'lusky'."
+            },
+            {
+                title: "Balada o ptácích a hadech (10. Hladové hry)",
+                year: "Kniha: 2020 | Film: 2023",
+                tagline: "Píseň vzpoury a zrod tyrana.",
+                summary: "Příběh se vrací o 64 let zpět. Osmnáctiletý Coriolanus Snow se snaží zachránit zašlou slávu své rodiny jako mentor splátkyně z 12. kraje – okouzlující zpěvačky Lucy Gray Bairdové. Sledujeme proměnu ambiciózního studenta v chladnokrevného stratéga, který položil základy moderních Hladových her.",
+                arena: "Rozbombardovaný kapitolský amfiteátr bez moderních technologií, plný trosek a hladu."
+            }
+        ];
+
+        function selectBookTab(index) {
+            // Aktualizace stylů tlačítek
+            document.querySelectorAll('.book-tab-btn').forEach((btn, i) => {
+                if (i === index) {
+                    btn.className = "book-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-amber-500 text-obsidian shadow-md";
+                } else {
+                    btn.className = "book-tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ash text-slate-300 hover:text-white";
+                }
+            });
+
+            const book = booksData[index];
+            const container = document.getElementById('book-content');
+            container.innerHTML = `
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="inline-block px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium">
+                        ${book.year}
+                    </div>
+                    <h4 class="font-display text-2xl sm:text-3xl font-bold text-white">${book.title}</h4>
+                    <p class="text-amber-500 italic font-medium">„${book.tagline}“</p>
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base">${book.summary}</p>
+                </div>
+                <div class="bg-obsidian/80 border border-white/10 rounded-xl p-5 space-y-3">
+                    <div class="flex items-center space-x-2 text-orange-500 font-semibold text-xs uppercase tracking-wider">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span>Prostředí Arény</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">${book.arena}</p>
+                </div>
+            `;
+        }
+        // Inicializace první záložky
+        selectBookTab(0);
+
+        // ==========================================
+        // 4. HLAVNÍ POSTAVY A MODÁLNÍ OKNO
+        // ==========================================
+        const charactersData = [
+            {
+                name: "Katniss Everdeen",
+                district: "12. kraj",
+                role: "Dívka v plamenech / Reprodrozd",
+                weapon: "Luk a šípy",
+                quote: "Dobrovolně se hlásím jako splátce!",
+                bio: "Mistrná lovkyně, která po smrti svého otce živila rodinu nelegálním lovem za hranicemi 12. kraje. Svou obětí za sestru Prim a nezlomným instinktem přežít se nechtěně stala symbolem celonárodní revoluce proti Kapitolu.",
+                accent: "from-amber-500 to-orange-600"
+            },
+            {
+                name: "Peeta Mellark",
+                district: "12. kraj",
+                role: "Chlapec s chlebem",
+                weapon: "Maskování, fyzická síla a diplomacie",
+                quote: "Nechci, aby mě v té Aréně změnili. Nechci, aby ze mě udělali nějaké monstrum.",
+                bio: "Syn pekaře s neobyčejným charismatem a laskavým srdcem. Využívá svou výřečnost a lásku ke Katniss k získání sponzorů v Aréně. Dokáže dokonale splynout s okolím díky svému malířskému nadání.",
+                accent: "from-yellow-400 to-amber-600"
+            },
+            {
+                name: "Haymitch Abernathy",
+                district: "12. kraj",
+                role: "Mentor a vítěz 50. Hladových her",
+                weapon: "Strategie a důvtip",
+                quote: "Zůstaň naživu.",
+                bio: "Jediný žijící vítěz z 12. kraje před Katniss a Peetou. Svou traumata z Arény utápí v alkoholu, ale pod cynickou slupkou se skrývá geniální stratég, který dokáže své svěřence udržet naživu.",
+                accent: "from-slate-400 to-slate-600"
+            },
+            {
+                name: "Gale Hawthorne",
+                district: "12. kraj",
+                role: "Lovec a velitel rebelů",
+                weapon: "Kuše a pasti",
+                quote: "Když se na ně nebudeme dívat, nemají žádnou moc.",
+                bio: "Nejlepší přítel a lovecký parťák Katniss. Hluboce nenávidí Kapitol a po zničení 12. kraje se stává jedním z nejradikálnějších vojáků a stratégů povstání ve 13. kraji.",
+                accent: "from-emerald-500 to-teal-700"
+            },
+            {
+                name: "Prezident Coriolanus Snow",
+                district: "Kapitol",
+                role: "Autokratický vládce Panemu",
+                weapon: "Jed a politická manipulace",
+                quote: "Naděje. Je to jediná věc silnější než strach.",
+                bio: "Chladnokrevný vůdce Panemu, který udržuje pořádek pomocí strachu, propagandy a Hladových her. Vždy nosí geneticky upravenou bílou růži, aby zakryl pach krve z úst způsobený vlastními jedy.",
+                accent: "from-red-600 to-rose-900"
+            },
+            {
+                name: "Effie Trinket",
+                district: "Kapitol",
+                role: "Doprovod splátců 12. kraje",
+                weapon: "Etiketa a organizace",
+                quote: "Šťastné Hladové hry! A kéž vás stále provází štěstěna!",
+                bio: "Excentrická obyvatelka Kapitolu posedlá módou, dochvilností a společenskými pravidly. Postupem času si však ke Katniss a Peetovi vytvoří hluboké pouto a pochopí krutost režimu.",
+                accent: "from-fuchsia-500 to-purple-700"
+            }
+        ];
+
+        const charsGrid = document.getElementById('characters-grid');
+        charactersData.forEach((char, index) => {
+            const card = document.createElement('div');
+            card.className = "bg-charcoal border border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/50 transition-all ember-glow-hover cursor-pointer group";
+            card.onclick = () => openCharacterModal(index);
+            card.innerHTML = `
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-obsidian border border-white/10 text-amber-400">
+                            ${char.district}
+                        </span>
+                        <div class="w-3 h-3 rounded-full bg-gradient-to-r ${char.accent}"></div>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-1">
+                        ${char.name}
+                    </h3>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-4">${char.role}</p>
+                    <p class="text-slate-300 text-sm italic border-l-2 border-amber-500/50 pl-3 mb-6">
+                        „${char.quote}“
+                    </p>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-white/10 text-xs font-semibold text-amber-500 group-hover:translate-x-1 transition-transform">
+                    <span>Zobrazit profil postavy</span>
+                    <span>→</span>
+                </div>
+            `;
+            charsGrid.appendChild(card);
+        });
+
+        function openCharacterModal(index) {
+            const char = charactersData[index];
+            const modal = document.getElementById('character-modal');
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `
+                <div class="inline-block px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold mb-3">
+                    ${char.district} • ${char.role}
+                </div>
+                <h3 class="font-display text-2xl sm:text-3xl font-bold text-white mb-4">${char.name}</h3>
+                <blockquote class="bg-obsidian/80 border-l-4 border-amber-500 p-4 rounded-r-xl mb-5">
+                    <p class="text-amber-200 italic text-base">„${char.quote}“</p>
+                </blockquote>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                    ${char.bio}
+                </p>
+                <div class="bg-obsidian p-4 rounded-xl border border-white/10 flex items-center justify-between">
+                    <span class="text-xs text-slate-400 uppercase tracking-wider">Hlavní přednost / zbraň:</span>
+                    <span class="text-sm font-semibold text-amber-400">${char.weapon}</span>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCharacterModal() {
+            const modal = document.getElementById('character-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Zavření modalu kliknutím mimo obsah
+        document.getElementById('character-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'character-modal') closeCharacterModal();
+        });
+
+        // ==========================================
+        // 5. PŘEHLED 12 KRAJŮ (+ TAJNÝ 13. KRAJ)
+        // ==========================================
+        const districtsData = [
+            { num: 1, name: "1. kraj", industry: "Výroba luxusního zboží", wealth: "Velmi vysoká (Profesionálové)", tributes: "Marvel, Glimmer, Gloss, Cashmere", desc: "Jeden z nejbohatších krajů Panemu, blízký spojenec Kapitolu. Děti zde od malička trénují na Hladové hry jako tzv. 'Profesionálové' a přihlásit se do Arény je pro ně ctí." },
+            { num: 2, name: "2. kraj", industry: "Zednictví, zbrojařství a výcvik Mírotvorců", wealth: "Velmi vysoká (Profesionálové)", tributes: "Cato, Clove, Brutus, Enobaria", desc: "Rozlehlý kraj ve Skalistých horách. Dodává Kapitolu kámen, zbraně a většinu elitních Mírotvorců. Jejich splátci patří k nejobávanějším bojovníkům v Aréně." },
+            { num: 3, name: "3. kraj", industry: "Technologie a elektronika", wealth: "Střední", tributes: "Beetee Latier, Wiress", desc: "Průmyslový kraj vyrábějící počítače, televize a výbušniny. Obyvatelé jsou mimořádně inteligentní – v Aréně často spoléhají spíše na důvtip a pasti než na hrubou sílu." },
+            { num: 4, name: "4. kraj", industry: "Rybolov", wealth: "Vysoká (Profesionálové)", tributes: "Finnick Odair, Mags, Annie Cresta", desc: "Pobřežní kraj, kde děti umějí plavat, házet trojzubcem a vyrábět sítě dříve, než začnou chodit do školy. Taktéž patří mezi obávané profesionální kraje." },
+            { num: 5, name: "5. kraj", industry: "Energetika", wealth: "Střední", tributes: "Liška (Foxface)", desc: "Zajišťuje elektrickou energii pro celý Panem prostřednictvím vodních a solárních elektráren. Splátci z tohoto kraje bývají nenápadní, bystří a vyhýbají se přímému střetu." },
+            { num: 6, name: "6. kraj", industry: "Doprava", wealth: "Nízká", tributes: "Morflíci (vítězové 75. her)", desc: "Centrum železniční a vznášedlové sítě Panemu. Paradoxně většina obyvatel nikdy nikam necestuje a kraj se potýká s vysokou mírou závislosti na léku zvaném morflín." },
+            { num: 7, name: "7. kraj", industry: "Dřevařství a výroba papíru", wealth: "Nízká", tributes: "Johanna Masonová, Blight", desc: "Kraj pokrytý nekonečnými jehličnatými lesy. Obyvatelé jsou od dětství zruční v zacházení se sekerou a pilou, což z nich v lese dělá smrtící soupeře." },
+            { num: 8, name: "8. kraj", industry: "Textilní průmysl", wealth: "Velmi nízká", tributes: "Bonnie, Twill, Woof", desc: "Průmyslový kraj plný továren, kde se šijí uniformy Mírotvorců. Jeden z prvních krajů, kde vypuklo otevřené povstání proti Kapitolu po 74. Hladových hrách." },
+            { num: 9, name: "9. kraj", industry: "Produkce obilí", wealth: "Nízká", tributes: "Rye, Panlo", desc: "Rozlehlé lány obilí zásobující pekárny celého Panemu. Přestože kraj produkuje základní potravinu, jeho obyvatelé často trpí nedostatkem jídla." },
+            { num: 10, name: "10. kraj", industry: "Chov dobytka", wealth: "Nízká", tributes: "Dalton", desc: "Kraj plný rančů a pastvin dodávající maso na stoly občanů Kapitolu. Obyvatelé jsou zvyklí na tvrdou fyzickou práci pod širým nebem." },
+            { num: 11, name: "11. kraj", industry: "Zemědělství a ovocnářství", wealth: "Velmi nízká", tributes: "Routa (Rue), Thresh, Chaff, Seeder", desc: "Rozsáhlý jižní kraj s přísným dohledem Mírotvorců. Obyvatelé znají léčivé byliny, umějí šplhat po stromech a dorozumívají se pomocí zpěvu reprodrozdů." },
+            { num: 12, name: "12. kraj", industry: "Těžba uhlí", wealth: "Extrémně nízká (Sluj)", tributes: "Katniss Everdeen, Peeta Mellark, Haymitch Abernathy, Lucy Gray Baird", desc: "Nejchudší a nejmenší kraj v pohoří Apalačských hor. Mnoho obyvatel umírá hlady nebo při důlních neštěstích. Přesto právě odtud vzešel Reprodrozd, který svrhl Kapitol." }
+        ];
+
+        const district13Data = {
+            num: 13,
+            name: "13. kraj (Tajný)",
+            industry: "Jaderné zbraně a grafit",
+            wealth: "Vojenská soběstačnost",
+            tributes: "Neúčastní se Hladových her",
+            desc: "Oficiálně zničen během Temných dnů. Ve skutečnosti obyvatelé přežili v rozsáhlém podzemním komplexu pod vedením prezidentky Almy Coinové. Po 75 let budovali tajnou armádu a jaderný arzenál, aby vedli finální revoluci proti Kapitolu."
+        };
+
+        let district13Unlocked = false;
+        const districtsGrid = document.getElementById('districts-grid');
+
+        function renderDistrictButtons() {
+            districtsGrid.innerHTML = '';
+            districtsData.forEach((d, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `dist-btn-${d.num}`;
+                btn.onclick = () => selectDistrict(d);
+                btn.className = "dist-btn p-3.5 rounded-xl bg-charcoal border border-white/10 hover:border-amber-500/60 text-left transition-all group";
+                btn.innerHTML = `
+                    <div class="text-xs text-slate-500 group-hover:text-amber-400 font-mono">KRAJ</div>
+                    <div class="font-display text-xl font-bold text-white group-hover:text-amber-400">${d.num}</div>
+                `;
+                districtsGrid.appendChild(btn);
+            });
+        }
+
+        function selectDistrict(district) {
+            // Reset aktivního stavu tlačítek
+            document.querySelectorAll('.dist-btn').forEach(b => {
+                b.classList.remove('border-amber-500', 'bg-amber-500/10');
+                b.classList.add('border-white/10', 'bg-charcoal');
+            });
+
+            const activeBtn = document.getElementById(`dist-btn-${district.num}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-white/10', 'bg-charcoal');
+                activeBtn.classList.add('border-amber-500', 'bg-amber-500/10');
+            }
+
+            const panel = document.getElementById('district-detail-panel');
+            const isSecret = district.num === 13;
+            panel.innerHTML = `
+                <div>
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${isSecret ? 'bg-red-500/20 text-red-400 border border-red-500/40' : 'bg-amber-500/15 text-amber-400 border border-amber-500/30'}">
+                            ${isSecret ? 'Přísně tajné • Odboj' : 'Oficiální záznam Kapitolu'}
+                        </span>
+                        <span class="text-xs text-slate-400">Životní úroveň: <strong class="text-slate-200">${district.wealth}</strong></span>
+                    </div>
+                    
+                    <h3 class="font-display text-3xl sm:text-4xl font-bold text-white mb-2">${district.name}</h3>
+                    <p class="text-amber-500 font-semibold text-sm sm:text-base mb-6">Zaměření: ${district.industry}</p>
+                    
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base mb-6">
+                        ${district.desc}
+                    </p>
+                </div>
+
+                <div class="bg-obsidian/90 border border-white/10 rounded-xl p-4">
+                    <span class="block text-xs text-slate-500 uppercase tracking-wider mb-1">Známí splátci a vítězové:</span>
+                    <span class="text-sm font-medium text-amber-300">${district.tributes}</span>
+                </div>
+            `;
+        }
+
+        function unlockDistrict13() {
+            district13Unlocked = true;
+            const secretBtn = document.getElementById('secret-district-btn');
+            secretBtn.className = "w-full py-3 px-4 rounded-xl border border-red-500/60 bg-red-500/10 text-red-400 text-xs font-mono tracking-wider uppercase transition-all flex items-center justify-center gap-2";
+            document.getElementById('secret-btn-text').textContent = "ODEMČENO: 13. KRAJ (PODZEMNÍ ODBOJ)";
+            selectDistrict(district13Data);
+        }
+
+        renderDistrictButtons();
+        selectDistrict(districtsData[11]); // Výchozí zobrazení: 12. kraj
+
+        // ==========================================
+        // 6. INTERAKTIVNÍ KVÍZ PŘEŽITÍ
+        // ==========================================
+        const quizQuestions = [
+            {
+                question: "Zazní výstřel a Hladové hry právě začínají. Co uděláš v prvních 10 sekundách?",
+                options: [
+                    { text: "Rozběhnu se přímo k Rohu hojnosti pro nejlepší zbraně a zásoby.", score: { warrior: 3, strategist: 0, survivor: 1 } },
+                    { text: "Popadnu nejbližší batoh na okraji a okamžitě zmizím hluboko do lesa.", score: { warrior: 0, strategist: 2, survivor: 3 } },
+                    { text: "Rychle zmapuji ostatní splátce, vyhodnotím hrozby a najdu si bezpečný úkryt.", score: { warrior: 1, strategist: 3, survivor: 2 } }
+                ]
+            },
+            {
+                question: "Jaká je tvá největší přirozená přednost v divočině?",
+                options: [
+                    { text: "Fyzická síla a boj zblízka – nikdo se ke mně nepřiblíží.", score: { warrior: 3, strategist: 0, survivor: 0 } },
+                    { text: "Znalost přírody, stopování, tichý pohyb a hledání vody či jedlých rostlin.", score: { warrior: 0, strategist: 1, survivor: 3 } },
+                    { text: "Chladná hlava, líčení pastí a schopnost předvídat kroky ostatních.", score: { warrior: 1, strategist: 3, survivor: 1 } }
+                ]
+            },
+            {
+                question: "Sponzoři z Kapitolu sledují každý tvůj pohyb. Jak si získáš jejich přízeň?",
+                options: [
+                    { text: "Neohroženým bojem a dominancí – publikum miluje silné šampiony.", score: { warrior: 3, strategist: 1, survivor: 0 } },
+                    { text: "Vytvořím silný emotivní příběh nebo spojenectví, které dojme diváky.", score: { warrior: 0, strategist: 3, survivor: 2 } },
+                    { text: "Spoléhám sám na sebe, Kapitolu nedám nic zadarmo.", score: { warrior: 1, strategist: 1, survivor: 3 } }
+                ]
+            },
+            {
+                question: "V Aréně zbývají poslední tři splátci a Tvůrci her vypustili smrtící muty. Jaký je tvůj plán?",
+                options: [
+                    { text: "Využiji terén a nastražím past, která vyřadí soupeře i muty najednou.", score: { warrior: 1, strategist: 3, survivor: 1 } },
+                    { text: "Vylezu vysoko do korun stromů nebo se zamaskuji a nechám je vyřídit se navzájem.", score: { warrior: 0, strategist: 2, survivor: 3 } },
+                    { text: "Postavím se jim čelem se zbraní v ruce – teď nebo nikdy.", score: { warrior: 3, strategist: 0, survivor: 0 } }
+                ]
+            }
+        ];
+
+        let currentStep = 0;
+        let scores = { warrior: 0, strategist: 0, survivor: 0 };
+
+        function renderQuizQuestion() {
+            const qArea = document.getElementById('quiz-question-area');
+            const rArea = document.getElementById('quiz-result-area');
+            const progContainer = document.getElementById('quiz-progress-container');
+
+            qArea.classList.remove('hidden');
+            progContainer.classList.remove('hidden');
+            rArea.classList.add('hidden');
+
+            const percent = Math.round(((currentStep + 1) / quizQuestions.length) * 100);
+            document.getElementById('quiz-step-label').textContent = `Otázka ${currentStep + 1} z ${quizQuestions.length}`;
+            document.getElementById('quiz-percent-label').textContent = `${percent} %`;
+            document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
+
+            const currentQ = quizQuestions[currentStep];
+            qArea.innerHTML = `
+                <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-6 leading-snug">
+                    ${currentQ.question}
+                </h3>
+                <div class="space-y-3">
+                    ${currentQ.options.map((opt, idx) => `
+                        <button onclick="answerQuiz(${idx})" class="w-full text-left p-4 sm:p-5 rounded-xl bg-obsidian border border-white/10 hover:border-amber-500 hover:bg-amber-500/10 text-slate-200 transition-all flex items-center justify-between group">
+                            <span class="text-sm sm:text-base pr-4">${opt.text}</span>
+                            <span class="w-6 h-6 rounded-full border border-slate-600 group-hover:border-amber-400 flex items-center justify-center text-xs text-amber-400 shrink-0">
+                                ${String.fromCharCode(65 + idx)}
+                            </span>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function answerQuiz(optionIndex) {
+            const selected = quizQuestions[currentStep].options[optionIndex].score;
+            scores.warrior += selected.warrior;
+            scores.strategist += selected.strategist;
+            scores.survivor += selected.survivor;
+
+            currentStep++;
+            if (currentStep < quizQuestions.length) {
+                renderQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const qArea = document.getElementById('quiz-question-area');
+            const rArea = document.getElementById('quiz-result-area');
+            const progContainer = document.getElementById('quiz-progress-container');
+
+            qArea.classList.add('hidden');
+            progContainer.classList.add('hidden');
+            rArea.classList.remove('hidden');
+
+            // Vyhodnocení archetypu
+            let result = {};
+            if (scores.warrior >= scores.strategist && scores.warrior >= scores.survivor) {
+                result = {
+                    district: "2. kraj (Zbrojařství a výcvik)",
+                    title: "Neohrožený šampion Arény",
+                    weapon: "Těžký meč nebo oštěp",
+                    odds: "82 %",
+                    desc: "Máš srdce bojovníka a v Aréně se nikoho nezalekneš. Tvůrci her i sponzoři z Kapitolu tě milují pro tvou odvahu. Pozor si musíš dát jen na zrádné pasti chytřejších soupeřů."
+                };
+            } else if (scores.strategist >= scores.warrior && scores.strategist >= scores.survivor) {
+                result = {
+                    district: "3. kraj (Technologie a strategie)",
+                    title: "Geniální taktik a mistr pastí",
+                    weapon: "Důmyslné pasti a elektronika",
+                    odds: "89 %",
+                    desc: "Tvá největší zbraň je tvá mysl. Dokážeš číst hru jako šachovnici, získat si přízeň sponzorů a využít pravidla Arény proti samotným Tvůrcům her – přesně jako Beetee nebo Haymitch."
+                };
+            } else {
+                result = {
+                    district: "12. kraj (Divočina a lov)",
+                    title: "Nespoutaný lovec a Reprodrozd",
+                    weapon: "Lovecký luk a šípy",
+                    odds: "94 %",
+                    desc: "Dokážeš přežít i v těch nejtvrdších podmínkách. Znáš přírodu, pohybuješ se tiše jako stín a tvůj instinkt přežití z tebe dělá největšího favorita na vítězství – a symbol naděje pro celý Panem."
+                };
+            }
+
+            rArea.innerHTML = `
+                <div class="inline-block px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4">
+                    Verdikt Tvůrců her
+                </div>
+                <h3 class="font-display text-2xl sm:text-4xl font-bold text-white mb-2">${result.title}</h3>
+                <p class="text-amber-500 font-semibold text-base mb-6">Přiřazený domov: ${result.district}</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-left">
+                    <div class="bg-obsidian p-4 rounded-xl border border-white/10">
+                        <span class="text-xs text-slate-400 uppercase block mb-1">Doporučená zbraň</span>
+                        <span class="text-white font-semibold text-sm sm:text-base">${result.weapon}</span>
+                    </div>
+                    <div class="bg-obsidian p-4 rounded-xl border border-white/10">
+                        <span class="text-xs text-slate-400 uppercase block mb-1">Šance na přežití</span>
+                        <span class="text-amber-400 font-display font-bold text-xl">${result.odds}</span>
+                    </div>
+                </div>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
+                    ${result.desc}
+                </p>
+
+                <button onclick="resetQuiz()" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-obsidian font-bold text-sm hover:from-amber-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-600/20">
+                    Zkusit Sklizeň znovu
+                </button>
+            `;
+        }
+
+        function resetQuiz() {
+            currentStep = 0;
+            scores = { warrior: 0, strategist: 0, survivor: 0 };
+            renderQuizQuestion();
+        }
+
+        // Inicializace kvízu
+        renderQuizQuestion();
+    </script>
+</body>
+</html>
